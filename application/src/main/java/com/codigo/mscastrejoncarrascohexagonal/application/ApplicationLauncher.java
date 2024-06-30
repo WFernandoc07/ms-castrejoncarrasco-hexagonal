@@ -1,13 +1,11 @@
-package com.codigo.mscastrejoncarrascohexagonal;
+package com.codigo.mscastrejoncarrascohexagonal.application;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class MsCastrejoncarrascoHexagonalApplication {
-
+public class ApplicationLauncher {
     public static void main(String[] args) {
-        SpringApplication.run(MsCastrejoncarrascoHexagonalApplication.class, args);
+        SpringApplication.run(ApplicationLauncher.class, args);
     }
-
 }

@@ -11,6 +11,7 @@
     <groupId>com.codigo</groupId>
     <artifactId>ms-castrejoncarrasco-hexagonal</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>ms-castrejoncarrasco-hexagonal</name>
     <description>ms-castrejoncarrasco-hexagonal</description>
     <url/>
@@ -20,6 +21,11 @@
     <developers>
         <developer/>
     </developers>
+    <modules>
+        <module>domain</module>
+        <module>application</module>
+        <module>infraestructure</module>
+    </modules>
     <scm>
         <connection/>
         <developerConnection/>
