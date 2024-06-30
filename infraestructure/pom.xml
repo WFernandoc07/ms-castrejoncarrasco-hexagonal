@@ -8,5 +8,13 @@
     </parent>
     <artifactId>infraestructure</artifactId>
     <name>Archetype - infraestructure</name>
+    <version>6.0.0</version>
     <url>http://maven.apache.org</url>
+    <dependencies>
+        <dependency>
+            <groupId>com.codigo</groupId>
+            <artifactId>domain</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+    </dependencies>
 </project>

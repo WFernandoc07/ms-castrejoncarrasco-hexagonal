@@ -14,5 +14,21 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.codigo</groupId>
+            <artifactId>domain</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codigo</groupId>
+            <artifactId>infraestructure</artifactId>
+            <version>6.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.codigo</groupId>
+            <artifactId>domain</artifactId>
+            <version>6.0.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 </project>
