@@ -8,6 +8,8 @@ import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class PersonaServiceImpl implements PersonaServiceIn {
@@ -27,4 +29,11 @@ public class PersonaServiceImpl implements PersonaServiceIn {
     public ResponseBase obtenerPersonaPorIdIn(String numDoc) {
         return personaServiceOut.obtenerPersonaPorIdOut(numDoc);
     }
+
+    @Override
+    public List<PersonaDTO> buscarTodosIn() {
+        return personaServiceOut.buscarTodosOut();
+    }
+
+
 }

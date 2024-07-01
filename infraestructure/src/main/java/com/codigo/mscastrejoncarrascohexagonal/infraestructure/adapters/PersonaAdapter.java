@@ -1,6 +1,7 @@
 package com.codigo.mscastrejoncarrascohexagonal.infraestructure.adapters;
 
 import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.constants.Constantes;
+import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.dto.PersonaDTO;
 import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.request.RequestPersona;
 import com.codigo.mscastrejoncarrascohexagonal.domain.exceptions.personalizada.PersonaException;
 import com.codigo.mscastrejoncarrascohexagonal.domain.ports.out.PersonaServiceOut;
@@ -20,7 +21,10 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -64,7 +68,6 @@ public class PersonaAdapter implements PersonaServiceOut {
         }else {
             throw new PersonaException("--La Persona no existe en el sistema--");
         }
-
     }
 
     @Override
@@ -76,6 +79,14 @@ public class PersonaAdapter implements PersonaServiceOut {
         }else {
             throw new PersonaException("--La Persona no existe en el sistema--");
         }
+    }
+
+    @Override
+    public List<PersonaDTO> buscarTodosOut() {
+        List<PersonaEntity> listaPersonas = personaRepository.findByEstado(Constantes.ESTADO_ACTIVO);
+        return listaPersonas.stream()
+                .map(personaMapper::mapToDto)
+                .collect(Collectors.toList());
     }
 
     private Timestamp getTime(){

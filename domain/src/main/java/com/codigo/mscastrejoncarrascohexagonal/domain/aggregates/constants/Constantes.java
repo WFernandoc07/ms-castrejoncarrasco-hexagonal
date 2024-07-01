@@ -19,5 +19,6 @@ public class Constantes {
     public static final String MENSAJE_EXITO="Persona Insertada Correctamente";
     public static final String MENSAJE_EXITO_ACTUALIZAR="Persona Actualizada Correctamente";
     public static final String MENSAJE_EXITO_OBTENER="Persona Obtenida Correctamente";
+    public static final String MENSAJE_EXITO_LISTAR="Personas Obtenidas Correctamente";
     public static final String MENSAJE_ERROR="Ocurrio un error en la transacción";
 }
