@@ -35,5 +35,10 @@ public class PersonaServiceImpl implements PersonaServiceIn {
         return personaServiceOut.buscarTodosOut();
     }
 
+    @Override
+    public ResponseBase eliminarPersonaIn(Long id) {
+        return personaServiceOut.eliminarPersonaOut(id);
+    }
+
 
 }

@@ -11,5 +11,5 @@ public interface PersonaServiceIn {
     ResponseBase actualizarPersonaIn(Long id, RequestPersona persona);
     ResponseBase obtenerPersonaPorIdIn(String numDoc);
     List<PersonaDTO> buscarTodosIn();
-
+    ResponseBase eliminarPersonaIn(Long id);
 }

@@ -11,4 +11,5 @@ public interface PersonaServiceOut {
     ResponseBase actualizarPersonaOut(Long id, RequestPersona persona);
     ResponseBase obtenerPersonaPorIdOut(String numDoc);
     List<PersonaDTO> buscarTodosOut();
+    ResponseBase eliminarPersonaOut(Long id);
 }

@@ -45,4 +45,11 @@ public class PersonaController {
         return ResponseEntity.ok(personas);
     }
 
+    @DeleteMapping("eliminar/{id}")
+    public ResponseEntity<ResponseBase> eliminar(@PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(personaServiceIn.eliminarPersonaIn(id));
+    }
+
 }

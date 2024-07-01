@@ -89,6 +89,21 @@ public class PersonaAdapter implements PersonaServiceOut {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public ResponseBase eliminarPersonaOut(Long id) {
+        Optional<PersonaEntity> personaRecuperada = personaRepository.findById(id);
+        PersonaEntity persona = personaRecuperada.get();
+        if (personaRecuperada.isPresent() && persona.isEstado()){
+            persona.setEstado(false);
+            persona.setDateDelete(getTime());
+            persona.setUsuaDelete(Constantes.USUARIO_ADMIN);
+            return new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ELIMINAR,
+                    Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+        } else {
+            throw new PersonaException("--La Persona no existe en el sistema--");
+        }
+    }
+
     private Timestamp getTime(){
         long current = System.currentTimeMillis();
         return new Timestamp(current);

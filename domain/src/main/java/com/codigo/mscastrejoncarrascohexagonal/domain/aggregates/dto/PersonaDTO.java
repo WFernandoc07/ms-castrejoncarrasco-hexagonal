@@ -26,4 +26,5 @@ public class PersonaDTO {
     private Timestamp dateUdpate;
     private String usuaUpdate;
     private Timestamp dateDelete;
+    private String usuaDelete;
 }
