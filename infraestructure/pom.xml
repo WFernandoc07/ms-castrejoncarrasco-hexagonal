@@ -16,5 +16,6 @@
             <artifactId>domain</artifactId>
             <version>6.0.0</version>
         </dependency>
+
     </dependencies>
 </project>

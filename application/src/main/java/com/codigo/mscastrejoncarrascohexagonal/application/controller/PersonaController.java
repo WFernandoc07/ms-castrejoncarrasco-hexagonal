@@ -1,8 +1,8 @@
 package com.codigo.mscastrejoncarrascohexagonal.application.controller;
 
-import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.dto.PersonaDTO;
 import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.request.RequestPersona;
 import com.codigo.mscastrejoncarrascohexagonal.domain.ports.in.PersonaServiceIn;
+import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class PersonaController {
     private final PersonaServiceIn personaServiceIn;
 
     @PostMapping
-    public ResponseEntity<PersonaDTO> registrar(@RequestBody RequestPersona persona) throws IOException {
+    public ResponseEntity<ResponseBase> registrar(@RequestBody RequestPersona persona) throws IOException {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(personaServiceIn.crearPersonaIn(persona));

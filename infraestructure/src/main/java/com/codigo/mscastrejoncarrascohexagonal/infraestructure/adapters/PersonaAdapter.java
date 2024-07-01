@@ -1,9 +1,10 @@
 package com.codigo.mscastrejoncarrascohexagonal.infraestructure.adapters;
 
 import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.constants.Constantes;
-import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.dto.PersonaDTO;
 import com.codigo.mscastrejoncarrascohexagonal.domain.aggregates.request.RequestPersona;
+import com.codigo.mscastrejoncarrascohexagonal.domain.exceptions.personalizada.PersonaException;
 import com.codigo.mscastrejoncarrascohexagonal.domain.ports.out.PersonaServiceOut;
+import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseReniec;
 import com.codigo.mscastrejoncarrascohexagonal.infraestructure.dao.PersonaRepository;
 import com.codigo.mscastrejoncarrascohexagonal.infraestructure.entity.PersonaEntity;
@@ -19,6 +20,7 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,15 +33,15 @@ public class PersonaAdapter implements PersonaServiceOut {
     private String token;
 
     @Override
-    public PersonaDTO crearPersonaOut(RequestPersona persona) {
+    public ResponseBase crearPersonaOut(RequestPersona persona) {
         PersonaEntity personaEntity = getEntityRestTemplate(persona);
         Boolean existe = personaRepository.existsByNumDoc(persona.getNumDoc());
-        if (existe) {
-            return null;
-        }else{
-            return personaMapper.mapToDto(personaRepository.save(personaEntity));
+        if (existe){
+            throw new PersonaException("--La Persona ya existe en el sistema--");
         }
-        
+        else {
+            return new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO, Optional.of(personaMapper.mapToDto(personaRepository.save(personaEntity))));
+        }
     }
 
     private Timestamp getTime(){
@@ -63,16 +65,29 @@ public class PersonaAdapter implements PersonaServiceOut {
 
             personaEntity.setNombre(responseReniec.getNombres());
             personaEntity.setApellido(responseReniec.getApellidoPaterno().concat(" ").concat(responseReniec.getApellidoMaterno()));
-            personaEntity.setEdad(requestPersona.getEdad());
+            if (requestPersona.getEdad() != 0)
+                personaEntity.setEdad(requestPersona.getEdad());
+            else
+                throw new NullPointerException("--Edad nula--");
             personaEntity.setCargo(requestPersona.getCargo());
             personaEntity.setTipoDoc(responseReniec.getTipoDocumento());
             personaEntity.setNumDoc(responseReniec.getNumeroDocumento());
-            personaEntity.setDepartamento(requestPersona.getDepartamento());
+            if(requestPersona.getDepartamento() != null)
+                personaEntity.setDepartamento(requestPersona.getDepartamento());
+            else
+                throw new NullPointerException("--Departamento nulo--");
             personaEntity.setSalario(requestPersona.getSalario());
-            personaEntity.setTelefono(requestPersona.getTelefono());
+            if (requestPersona.getTelefono() != null)
+                personaEntity.setTelefono(requestPersona.getTelefono());
+            else
+                throw new NullPointerException("--Nro Teléfono nulo--");
+
             personaEntity.setCorreo(requestPersona.getCorreo());
             personaEntity.setEstado(Constantes.ESTADO_ACTIVO);
-            personaEntity.setDireccion(requestPersona.getDireccion());
+            if(requestPersona.getDireccion() != null)
+                personaEntity.setDireccion(requestPersona.getDireccion());
+            else
+                throw new NullPointerException("--Direccion nula--");
             personaEntity.setUsuaCrea(Constantes.USUARIO_ADMIN);
             personaEntity.setDateCrea(getTime());
             return personaEntity;
