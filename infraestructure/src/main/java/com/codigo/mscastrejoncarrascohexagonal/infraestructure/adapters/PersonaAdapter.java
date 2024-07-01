@@ -21,10 +21,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.sql.Timestamp;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,20 +49,24 @@ public class PersonaAdapter implements PersonaServiceOut {
     @Override
     public ResponseBase actualizarPersonaOut(Long id, RequestPersona datosParaActualizar) {
         Optional<PersonaEntity> personaRecuperada = personaRepository.findById(id);
+
         if (personaRecuperada.isPresent()){
             PersonaEntity persona = personaRecuperada.get();
-
-            persona.setEdad(datosParaActualizar.getEdad());
-            persona.setCargo(datosParaActualizar.getCargo());
-            persona.setSalario(datosParaActualizar.getSalario());
-            persona.setTelefono(datosParaActualizar.getTelefono());
-            persona.setCorreo(datosParaActualizar.getCorreo());
-            persona.setDepartamento(datosParaActualizar.getDepartamento());
-            persona.setTelefono(datosParaActualizar.getTelefono());
-            persona.setDateUdpate(getTime());
-            persona.setUsuaUpdate(Constantes.USUARIO_ADMIN);
-            return  new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ACTUALIZAR,
-                    Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+            if (persona.isEstado()){
+                persona.setEdad(datosParaActualizar.getEdad());
+                persona.setCargo(datosParaActualizar.getCargo());
+                persona.setSalario(datosParaActualizar.getSalario());
+                persona.setTelefono(datosParaActualizar.getTelefono());
+                persona.setCorreo(datosParaActualizar.getCorreo());
+                persona.setDepartamento(datosParaActualizar.getDepartamento());
+                persona.setTelefono(datosParaActualizar.getTelefono());
+                persona.setDateUdpate(getTime());
+                persona.setUsuaUpdate(Constantes.USUARIO_ADMIN);
+                return  new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ACTUALIZAR,
+                        Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+            } else {
+                throw new PersonaException("--La Persona no existe en el sistema--");
+            }
         }else {
             throw new PersonaException("--La Persona no existe en el sistema--");
         }
@@ -73,7 +75,8 @@ public class PersonaAdapter implements PersonaServiceOut {
     @Override
     public ResponseBase obtenerPersonaPorIdOut(String numDoc) {
         PersonaEntity persona = personaRepository.findByNumDoc(numDoc);
-        if(persona != null){
+
+        if(persona != null && persona.isEstado()){
             return new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_OBTENER,
                     Optional.ofNullable(personaMapper.mapToDto(persona)));
         }else {
@@ -86,19 +89,24 @@ public class PersonaAdapter implements PersonaServiceOut {
         List<PersonaEntity> listaPersonas = personaRepository.findByEstado(Constantes.ESTADO_ACTIVO);
         return listaPersonas.stream()
                 .map(personaMapper::mapToDto)
-                .collect(Collectors.toList());
+                .toList();
     }
 
     @Override
     public ResponseBase eliminarPersonaOut(Long id) {
         Optional<PersonaEntity> personaRecuperada = personaRepository.findById(id);
-        PersonaEntity persona = personaRecuperada.get();
-        if (personaRecuperada.isPresent() && persona.isEstado()){
-            persona.setEstado(false);
-            persona.setDateDelete(getTime());
-            persona.setUsuaDelete(Constantes.USUARIO_ADMIN);
-            return new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ELIMINAR,
-                    Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+
+        if (personaRecuperada.isPresent()){
+            PersonaEntity persona = personaRecuperada.get();
+            if (persona.isEstado()){
+                persona.setEstado(false);
+                persona.setDateDelete(getTime());
+                persona.setUsuaDelete(Constantes.USUARIO_ADMIN);
+                return new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ELIMINAR,
+                        Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+            } else {
+                throw new PersonaException("--La Persona no existe en el sistema--");
+            }
         } else {
             throw new PersonaException("--La Persona no existe en el sistema--");
         }
