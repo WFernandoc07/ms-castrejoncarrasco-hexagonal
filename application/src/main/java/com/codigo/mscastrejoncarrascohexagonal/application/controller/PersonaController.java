@@ -6,10 +6,7 @@ import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
@@ -25,4 +22,12 @@ public class PersonaController {
                 .status(HttpStatus.CREATED)
                 .body(personaServiceIn.crearPersonaIn(persona));
     }
+
+    @PutMapping("actualizar/{id}")
+    public ResponseEntity<ResponseBase> actualizar(@RequestBody RequestPersona persona, @PathVariable Long id){
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(personaServiceIn.actualizarPersonaIn(id, persona));
+    }
+
 }

@@ -6,4 +6,5 @@ import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 
 public interface PersonaServiceOut {
     ResponseBase crearPersonaOut(RequestPersona persona);
+    ResponseBase actualizarPersonaOut(Long id, RequestPersona persona);
 }

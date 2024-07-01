@@ -17,4 +17,9 @@ public class PersonaServiceImpl implements PersonaServiceIn {
     public ResponseBase crearPersonaIn(RequestPersona persona) {
         return personaServiceOut.crearPersonaOut(persona);
     }
+
+    @Override
+    public ResponseBase actualizarPersonaIn(Long id, RequestPersona persona) {
+        return personaServiceOut.actualizarPersonaOut(id, persona);
+    }
 }

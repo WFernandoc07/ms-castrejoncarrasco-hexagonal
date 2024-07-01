@@ -6,5 +6,6 @@ import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseBase;
 
 public interface PersonaServiceIn {
     ResponseBase crearPersonaIn(RequestPersona persona);
+    ResponseBase actualizarPersonaIn(Long id, RequestPersona persona);
 
 }

@@ -44,6 +44,27 @@ public class PersonaAdapter implements PersonaServiceOut {
         }
     }
 
+    @Override
+    public ResponseBase actualizarPersonaOut(Long id, RequestPersona datosParaActualizar) {
+        Optional<PersonaEntity> personaRecuperada = personaRepository.findById(id);
+        if (personaRecuperada.isPresent()){
+            PersonaEntity persona = personaRecuperada.get();
+
+            persona.setEdad(datosParaActualizar.getEdad());
+            persona.setCargo(datosParaActualizar.getCargo());
+            persona.setSalario(datosParaActualizar.getSalario());
+            persona.setTelefono(datosParaActualizar.getTelefono());
+            persona.setCorreo(datosParaActualizar.getCorreo());
+            persona.setDepartamento(datosParaActualizar.getDepartamento());
+            persona.setTelefono(datosParaActualizar.getTelefono());
+            return  new ResponseBase(Constantes.CODIGO_EXITO, Constantes.MENSAJE_EXITO_ACTUALIZAR,
+                    Optional.of(personaMapper.mapToDto(personaRepository.save(persona))));
+        }else {
+            throw new PersonaException("--La Persona no existe en el sistema--");
+        }
+
+    }
+
     private Timestamp getTime(){
         long current = System.currentTimeMillis();
         return new Timestamp(current);
