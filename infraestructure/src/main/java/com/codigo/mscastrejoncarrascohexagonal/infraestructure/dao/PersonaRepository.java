@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PersonaRepository extends JpaRepository<PersonaEntity, Long> {
     Boolean existsByNumDoc(String numDoc);
+
+    PersonaEntity findByNumDoc(String numDoc);
 }

@@ -22,4 +22,9 @@ public class PersonaServiceImpl implements PersonaServiceIn {
     public ResponseBase actualizarPersonaIn(Long id, RequestPersona persona) {
         return personaServiceOut.actualizarPersonaOut(id, persona);
     }
+
+    @Override
+    public ResponseBase obtenerPersonaPorIdIn(String numDoc) {
+        return personaServiceOut.obtenerPersonaPorIdOut(numDoc);
+    }
 }

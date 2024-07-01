@@ -30,4 +30,11 @@ public class PersonaController {
                 .body(personaServiceIn.actualizarPersonaIn(id, persona));
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseBase> obtenerPersonaPorNumDoc(@PathVariable String id){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(personaServiceIn.obtenerPersonaPorIdIn(id));
+    }
+
 }
