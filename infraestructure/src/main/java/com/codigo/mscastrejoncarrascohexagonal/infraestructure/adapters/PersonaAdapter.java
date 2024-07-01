@@ -10,8 +10,10 @@ import com.codigo.mscastrejoncarrascohexagonal.domain.response.ResponseReniec;
 import com.codigo.mscastrejoncarrascohexagonal.infraestructure.dao.PersonaRepository;
 import com.codigo.mscastrejoncarrascohexagonal.infraestructure.entity.PersonaEntity;
 import com.codigo.mscastrejoncarrascohexagonal.infraestructure.mapper.PersonaMapper;
+import com.codigo.mscastrejoncarrascohexagonal.infraestructure.specification.PersonaSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -110,6 +112,23 @@ public class PersonaAdapter implements PersonaServiceOut {
         } else {
             throw new PersonaException("--La Persona no existe en el sistema--");
         }
+    }
+
+    @Override
+    public List<PersonaDTO> buscarPersonaPoCriterioOut(String nombre, String telefono, String numDoc) {
+        Specification<PersonaEntity> spec = Specification.where(PersonaSpecification.nombreContains(nombre))
+                .and(PersonaSpecification.telefonoContains(telefono))
+                .and(PersonaSpecification.numDocContains(numDoc))
+                .and(PersonaSpecification.estadoIsTrue());
+        List<PersonaEntity> listaPersonas = personaRepository.findAll(spec);
+        if (listaPersonas.isEmpty()){
+            throw new PersonaException("--No existe personas con esos datos en el sistema--");
+        } else {
+            return listaPersonas.stream()
+                    .map(personaMapper::mapToDto)
+                    .toList();
+        }
+
     }
 
     private Timestamp getTime(){

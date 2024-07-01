@@ -52,4 +52,14 @@ public class PersonaController {
                 .body(personaServiceIn.eliminarPersonaIn(id));
     }
 
+    @GetMapping("/listarpor")
+    public ResponseEntity<List<PersonaDTO>> listarPorCriterio(
+            @RequestParam(required = false) String nombre,
+            @RequestParam(required = false) String telefono,
+            @RequestParam(required = false) String numDoc
+    ) {
+        List<PersonaDTO> listaPersonas = personaServiceIn.buscarPersonaPoCriterioIn(nombre, telefono, numDoc);
+        return ResponseEntity.ok(listaPersonas);
+    }
+
 }

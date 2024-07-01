@@ -12,4 +12,6 @@ public interface PersonaServiceIn {
     ResponseBase obtenerPersonaPorIdIn(String numDoc);
     List<PersonaDTO> buscarTodosIn();
     ResponseBase eliminarPersonaIn(Long id);
+
+    List<PersonaDTO> buscarPersonaPoCriterioIn(String nombre, String telefono, String numDoc);
 }

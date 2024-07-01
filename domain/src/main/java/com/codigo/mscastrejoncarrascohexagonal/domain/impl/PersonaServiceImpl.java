@@ -40,5 +40,10 @@ public class PersonaServiceImpl implements PersonaServiceIn {
         return personaServiceOut.eliminarPersonaOut(id);
     }
 
+    @Override
+    public List<PersonaDTO> buscarPersonaPoCriterioIn(String nombre, String telefono, String numDoc) {
+        return personaServiceOut.buscarPersonaPoCriterioOut(nombre, telefono, numDoc);
+    }
+
 
 }
